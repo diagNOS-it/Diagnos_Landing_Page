@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="config.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0d0d0d;
+      color: #f3f4f6;
+    }
+    .prose {
+      color: #e5e7eb;
+      max-width: 65ch;
+    }
+    .prose h1, .prose h2, .prose h3 {
+      color: #fff;
+    }
+    .prose a {
+      color: #60a5fa;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-gray-950/90 backdrop-blur-md border-b border-gray-800 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <a href="/" class="text-lg font-bold text-white" id="navCompanyName"></a>
+      <ul class="hidden md:flex space-x-8 text-gray-300 font-medium">
+        <li><a href="/#services" class="hover:text-white">Services</a></li>
+        <li><a href="/#solutions" class="hover:text-white">Solutions</a></li>
+        <li><a href="/#contact" class="hover:text-white">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Policy Section -->
+  <section class="min-h-screen flex flex-col items-center justify-start pt-32 px-6">
+    <div class="max-w-3xl w-full">
+      <h1 class="text-4xl font-bold mb-8 text-center">Privacy Policy</h1>
+      <div id="policyContent" class="prose"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 text-center text-gray-500 text-sm">
+    <p>
+      © <span id="year"></span> <span id="companyNameFooter"></span>. All rights reserved. |
+      <a href="/policy" class="underline text-gray-400">Privacy Policy</a>
+    </p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Config
+      document.getElementById('navCompanyName').innerText = CONFIG.companyName;
+      document.getElementById('companyNameFooter').innerText = CONFIG.companyName;
+      document.getElementById('year').innerText = new Date().getFullYear();
+
+      // Load policy HTML
+      try {
+        const res = await fetch(CONFIG.diagnosprivacyPolicyUrl);
+        const html = await res.text();
+        document.getElementById('policyContent').innerHTML = html;
+      } catch (err) {
+        document.getElementById('policyContent').innerHTML =
+          "<p class='text-red-500'>Unable to load Privacy Policy.</p>";
+      }
+    });
+  </script>
+</body>
+</html>
